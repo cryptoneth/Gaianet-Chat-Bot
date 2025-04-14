@@ -37,7 +37,7 @@ const API_CONFIG = {
 
 const MODEL_CONFIG = {
   GROQ: {
-    NAME: "mixtral-8x7b-32768",
+    NAME: "llama-3.3-70b-versatile",
     TEMPERATURE: 0.9,
     MAX_TOKENS: 1024,
   },
