@@ -42,7 +42,7 @@ const MODEL_CONFIG = {
     MAX_TOKENS: 1024,
   },
   GAIA: {
-    NAME: "qwen-1.5-0.5b-chat",
+    NAME: "Qwen1.5-0.5B-Chat-Q5_K_M",
   },
 };
 
