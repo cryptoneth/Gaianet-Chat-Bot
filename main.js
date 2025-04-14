@@ -8,7 +8,7 @@ import { CountdownTimer } from "./config/countdown.js";
 import { logger } from "./config/logger.js";
 import { HttpsProxyAgent } from "https-proxy-agent"; // اضافه کردن ماژول پروکسی
 
-const numberOfCycle = 10; // Number of cycles you want to run
+const numberOfCycle = 9000000000; // Number of cycles you want to run
 const groqClient = new Groq({
   apiKey: "your-groq-api-key", // Your Groq API Key
 });
