@@ -14,7 +14,7 @@ Before installing, ensure you have the following installed:
 ### Step 1: Clone the Repository
 Open a terminal and run:
 ```sh
-git clone https://github.com/RPC-Hubs/Gaianet-Chat-Bot.git
+git clone https://github.com/cryptoneth/Gaianet-Chat-Bot.git
 cd Gaianet-Chat-Bot
 ```
 
