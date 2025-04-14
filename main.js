@@ -6,11 +6,25 @@ import { colors } from "./config/colors.js";
 import { displayBanner } from "./config/banner.js";
 import { CountdownTimer } from "./config/countdown.js";
 import { logger } from "./config/logger.js";
+import { HttpsProxyAgent } from "https-proxy-agent"; // اضافه کردن ماژول پروکسی
 
 const numberOfCycle = 10; // Number of cycles you want to run
 const groqClient = new Groq({
   apiKey: "your-groq-api-key", // Your Groq API Key
 });
+
+// تنظیم آدرس پروکسی
+const proxyUrl = "http://username:password@proxy-host:port"; // جایگزین با اطلاعات پروکسی خود
+const proxyAgent = new HttpsProxyAgent(proxyUrl);
+
+// تابع fetch با پشتیبانی از پروکسی
+async function fetchWithProxy(url, options = {}) {
+  logger.info(`${colors.info}Using proxy: ${proxyUrl}${colors.reset}`);
+  return await fetch(url, {
+    ...options,
+    agent: proxyAgent, // افزودن پروکسی به درخواست
+  });
+}
 
 const API_CONFIG = {
   BASE_URL: "llama.gaia.domains",
@@ -31,7 +45,6 @@ const MODEL_CONFIG = {
     NAME: "Phi-3-mini-4k-instruct",
   },
 };
-
 
 const RETRY_CONFIG = {
   MAX_ATTEMPTS: 5,
@@ -60,7 +73,6 @@ const BROWSER_CONFIG = {
   CHROME_VERSION: "131",
   BRAND_VERSION: "24",
 };
-
 
 const timer = new CountdownTimer();
 const w3 = new Web3("https://1rpc.io/base");
@@ -97,7 +109,7 @@ async function getAuthToken(privateKey) {
       message: JSON.parse(message),
       signature,
     };
-    const response = await fetch(API_CONFIG.GET_AUTH, {
+    const response = await fetchWithProxy(API_CONFIG.GET_AUTH, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -206,7 +218,7 @@ async function chatWithGaianet(
         },
       };
 
-      const response = await fetch(getGaianetUrl(nodeId), {
+      const response = await fetchWithProxy(getGaianetUrl(nodeId), {
         method: "POST",
         headers,
         body: JSON.stringify(payload),
@@ -300,7 +312,7 @@ async function chatWithGaianet(
 
 async function getNodeIds(authToken) {
   try {
-    const response = await fetch(API_CONFIG.NODE_LIST_URL, {
+    const response = await fetchWithProxy(API_CONFIG.NODE_LIST_URL, {
       method: "GET",
       headers: {
         Authorization: `${authToken}`,
